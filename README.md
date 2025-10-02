@@ -322,14 +322,3 @@ Required format: Same as Stage 1 but with `value` and `type` fields added to eac
 
 ---
 
-## 📄 License
-
-This project is submitted as part of the Multi-QR Recognition Challenge hackathon.
-
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome!
-
----
-
-**Built with ❤️ for the Multi-QR Recognition Challenge**
