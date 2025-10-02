@@ -1,17 +1,22 @@
 # Multi-QR Code Detection for Medicine Packs
-Hackathon Submission: Multi-QR Recognition Challenge
+
+**Hackathon Submission: Multi-QR Recognition Challenge**
 
 A robust detection system for identifying multiple QR codes on medicine packaging using hybrid computer vision techniques.
 
-## Features
+---
 
-- Stage 1: Multi-QR detection with bounding boxes
-- Stage 2: QR decoding and classification (manufacturer, batch, distributor, etc.)
+## ✨ Features
+
+- **Stage 1**: Multi-QR detection with bounding boxes
+- **Stage 2**: QR decoding and classification (manufacturer, batch, distributor, etc.)
 - Handles tilted, blurred, and partially occluded QR codes
 - No external APIs - fully self-contained solution
 - Multi-method detection pipeline for high accuracy
 
-##  Repository Structure
+---
+
+## 📁 Repository Structure
 
 ```
 multiqr-hackathon/
@@ -28,21 +33,24 @@ multiqr-hackathon/
 ├── data/                        # Dataset folder (not included)
 │   ├── train/                   # Training images
 │   ├── test/                    # Test images
-│   └── train_annotations.json , test_annotaions.json         # Ground truth annotations
+│   └── train_annotations.json   # Ground truth annotations
+│   └── test_annotations.json    # Test annotations
 │
 └── outputs/
     ├── submission_detection_1.json    # Stage 1 output
-    ├── submission_decoding_2.json     # Stage 2 output
+    └── submission_decoding_2.json     # Stage 2 output
 ```
 
-##  Quick Start
+---
+
+## 🚀 Quick Start
 
 ### 1. Installation
 
 ```bash
 # Clone repository
 git clone <your-repo-url>
-cd Multiqr
+cd multiqr-hackathon
 
 # Create virtual environment
 python -m venv venv
@@ -65,9 +73,10 @@ Place your dataset in the `data/` folder:
 
 ```
 data/
-├── train/                # Training images
-├── test/                 # Test images  
-└── annotations.json      # Training annotations
+├── train/                      # Training images
+├── test/                       # Test images
+├── train_annotations.json      # Training annotations
+└── test_annotations.json       # Test annotations
 ```
 
 ### 3. Training/Validation
@@ -93,7 +102,7 @@ python infer.py \
   --output outputs/submission_detection_1.json
 ```
 
-Output format:
+**Output format:**
 ```json
 [
   {
@@ -110,12 +119,12 @@ Output format:
 
 ```bash
 python infer.py \
-  --input data/test_images/ \
+  --input data/test/ \
   --output outputs/submission_decoding_2.json \
   --decode
 ```
 
-Output format:
+**Output format:**
 ```json
 [
   {
@@ -152,42 +161,46 @@ python evaluate.py \
   --stage 2
 ```
 
-##  Technical Approach
+---
+
+## 🔬 Technical Approach
 
 ### Detection Pipeline
 
-1. **Image Preprocessing** (8 variants):
-   - Histogram equalization
-   - CLAHE (adaptive)
-   - Bilateral filtering
-   - Sharpening
-   - Morphological operations
-   - Otsu's thresholding
-   - Adaptive thresholding
+**1. Image Preprocessing** (8 variants)
+- Histogram equalization
+- CLAHE (adaptive)
+- Bilateral filtering
+- Sharpening
+- Morphological operations
+- Otsu's thresholding
+- Adaptive thresholding
 
-2. **Multi-Method Detection**:
-   - OpenCV QRCodeDetector
-   - WeChat QR detector (if available)
-   - pyzbar library
-   - Contour-based pattern matching
+**2. Multi-Method Detection**
+- OpenCV QRCodeDetector
+- WeChat QR detector (if available)
+- pyzbar library
+- Contour-based pattern matching
 
-3. **Post-Processing**:
-   - Non-Maximum Suppression (NMS)
-   - Duplicate removal
-   - Confidence scoring
+**3. Post-Processing**
+- Non-Maximum Suppression (NMS)
+- Duplicate removal
+- Confidence scoring
 
 ### Decoding & Classification
 
 - **Decoding**: Multiple attempts with enhanced preprocessing
 - **Classification**: Rule-based keyword matching
-  - Manufacturer (MFR, MANUF, MAKER)
-  - Batch (BATCH, LOT, B#)
-  - Distributor (DIST, SUPPLIER)
-  - Regulator (REG, FDA, CERT)
-  - Serial (SN, SERIAL)
-  - Expiry (EXP, DATE, MFG)
+  - **Manufacturer**: MFR, MANUF, MAKER
+  - **Batch**: BATCH, LOT, B#
+  - **Distributor**: DIST, SUPPLIER
+  - **Regulator**: REG, FDA, CERT
+  - **Serial**: SN, SERIAL
+  - **Expiry**: EXP, DATE, MFG
 
-##  Performance
+---
+
+## 📊 Performance
 
 Expected metrics on validation set:
 - **Precision**: 85-95%
@@ -195,49 +208,53 @@ Expected metrics on validation set:
 - **F1 Score**: 75-90%
 - **Processing Speed**: ~1-2 seconds per image
 
+---
+
 ## 🛠️ Command-Line Options
 
 ### infer.py
 
 ```bash
 python infer.py --help
-
-Options:
-  --input PATH          Input image or folder (required)
-  --output PATH         Output JSON file (required)
-  --decode              Enable decoding/classification (Stage 2)
-  --confidence FLOAT    Confidence threshold (default: 0.5)
 ```
+
+**Options:**
+- `--input PATH` - Input image or folder (required)
+- `--output PATH` - Output JSON file (required)
+- `--decode` - Enable decoding/classification (Stage 2)
+- `--confidence FLOAT` - Confidence threshold (default: 0.5)
 
 ### train.py
 
 ```bash
 python train.py --help
-
-Options:
-  --data_dir PATH       Training images directory (required)
-  --annotations PATH    Annotations JSON file (required)
-  --output_dir PATH     Output directory (default: outputs)
-  --tune                Tune detection parameters
-  --visualize           Visualize failure cases
 ```
+
+**Options:**
+- `--data_dir PATH` - Training images directory (required)
+- `--annotations PATH` - Annotations JSON file (required)
+- `--output_dir PATH` - Output directory (default: outputs)
+- `--tune` - Tune detection parameters
+- `--visualize` - Visualize failure cases
 
 ### evaluate.py
 
 ```bash
 python evaluate.py --help
-
-Options:
-  --predictions PATH    Predictions JSON file (required)
-  --ground_truth PATH   Ground truth JSON file (required)
-  --stage {1,2}         Evaluation stage (default: 1)
-  --iou_threshold FLOAT IoU threshold (default: 0.5)
-  --output PATH         Save detailed results JSON
 ```
 
-##  Dependencies
+**Options:**
+- `--predictions PATH` - Predictions JSON file (required)
+- `--ground_truth PATH` - Ground truth JSON file (required)
+- `--stage {1,2}` - Evaluation stage (default: 1)
+- `--iou_threshold FLOAT` - IoU threshold (default: 0.5)
+- `--output PATH` - Save detailed results JSON
 
-Core requirements:
+---
+
+## 📦 Dependencies
+
+**Core requirements:**
 - Python 3.8+
 - OpenCV (opencv-python)
 - pyzbar
@@ -246,6 +263,8 @@ Core requirements:
 - matplotlib
 
 See `requirements.txt` for complete list.
+
+---
 
 ## 🔍 Troubleshooting
 
@@ -275,7 +294,9 @@ pip install pyzbar
 
 **Solution**: This is optional. The system works without it using other methods.
 
-##  How It Works
+---
+
+## 💡 How It Works
 
 The system uses a **multi-pass detection strategy**:
 
@@ -287,7 +308,9 @@ The system uses a **multi-pass detection strategy**:
 
 This aggressive multi-method approach achieves high recall while NMS prevents false positives.
 
-##  Submission Files
+---
+
+## 📤 Submission Files
 
 ### submission_detection_1.json (Stage 1)
 
@@ -297,5 +320,16 @@ Required format: List of image predictions with bounding boxes in `[x_min, y_min
 
 Required format: Same as Stage 1 but with `value` and `type` fields added to each QR.
 
+---
 
+## 📄 License
 
+This project is submitted as part of the Multi-QR Recognition Challenge hackathon.
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+---
+
+**Built with ❤️ for the Multi-QR Recognition Challenge**
