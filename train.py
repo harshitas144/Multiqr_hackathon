@@ -1,10 +1,4 @@
-#!/usr/bin/env python3
-"""
-train.py - Training and Validation Script for Multi-QR Detection
-Usage:
-    python train.py --data_dir data/train --annotations data/annotations.json
-    python train.py --data_dir data/train --annotations data/annotations.json --tune
-"""
+
 
 import argparse
 import json
