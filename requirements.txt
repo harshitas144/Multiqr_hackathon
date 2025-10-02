@@ -1,0 +1,22 @@
+# Multi-QR Code Detection System - Requirements
+
+# Core Computer Vision
+opencv-python>=4.8.0
+opencv-contrib-python>=4.8.0
+
+# QR Code Detection and Decoding
+pyzbar>=0.1.9
+
+# Image Processing
+Pillow>=10.0.0
+numpy>=1.24.0
+
+# Progress and Utilities
+tqdm>=4.65.0
+
+# Visualization
+matplotlib>=3.7.0
+
+# Optional: Deep Learning (for future enhancements)
+# torch>=2.0.0
+# torchvision>=0.15.0
